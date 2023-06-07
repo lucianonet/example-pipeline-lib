@@ -1,5 +1,5 @@
 //import com.functions.provisionItems
-import com.functions.functionUtils
+import com.functions.FfunctionUtils
 
 /**
  * The step entry point.
@@ -11,7 +11,7 @@ def call() {
     println rootFolderPath
     println env.GIT_URL
 
-    functionUtils fu = new functionUtils()
+    FfunctionUtils fu = new FfunctionUtils()
     
     fu.helloWorld()
     //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
