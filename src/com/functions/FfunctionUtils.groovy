@@ -7,7 +7,7 @@ class FfunctionUtils {
      FfunctionUtils() {}
 
 	Boolean helloWorld() {
-	  echo "Testing functions impors in vars steps"
+	  println "Testing functions impors in vars steps"
 	  true
 	}
 
