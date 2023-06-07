@@ -1,3 +1,3 @@
 def call() {
-    sh "echo Hello World. Today is Friday"
+    sh "echo Hello World. Today is Sunday"
 }
