@@ -1,5 +1,5 @@
 //import com.functions.provisionItems
-import com.functions.helloWorldddddd
+import com.functions.functionUtils
 
 /**
  * The step entry point.
@@ -10,8 +10,10 @@ def call() {
 
     println rootFolderPath
     println env.GIT_URL
+
+    functionUtils fu = new functionUtils()
     
-    helloWorld()
+    fu.helloWorld()
     //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
     
     //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
