@@ -1,3 +1,5 @@
+package com.functions
+
 /**
  * Provision items on Jenkins.
  * @param rootFolderPath A root folder path.
