@@ -6,6 +6,7 @@ package com.functions
  * @param repositoryURL The repository URL.
  * @return The list of Jenkinsfile paths for which corresponding items have been provisioned.
  */
+
 List<String> provisionItems(String rootFolderPath, String repositoryURL) {
     // Find all Jenkinsfiles.
     List<String> jenkinsfilePaths = findFiles(glob: '**/*/Jenkinsfile').collect { it.path }
