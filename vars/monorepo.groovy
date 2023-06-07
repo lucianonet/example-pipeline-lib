@@ -6,8 +6,9 @@ def call() {
     String rootFolderPath = "Generated/$repositoryName"
 
     println rootFolderPath
-
-    //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
+    println env.GIT_URL
+    List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
+    
     //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
 }
