@@ -4,6 +4,7 @@ import com.functions.ProvisionItems
  * The step entry point.
  */
 def call() {
+   script { 
     String repositoryName = env.JOB_NAME.split('/')[1]
     String rootFolderPath = "Generated/$repositoryName"
 
@@ -16,4 +17,5 @@ def call() {
     
     //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
+   } 
 }
