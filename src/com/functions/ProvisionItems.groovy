@@ -1,4 +1,10 @@
+
 package com.functions
+ 
+
+class ProvisionItems {
+
+    ProvisionItems() { }
 
 /**
  * Provision items on Jenkins.
@@ -7,7 +13,7 @@ package com.functions
  * @return The list of Jenkinsfile paths for which corresponding items have been provisioned.
  */
 
-List<String> provisionItems(String rootFolderPath, String repositoryURL) {
+ List<String> provisionItems(String rootFolderPath, String repositoryURL) {
     // Find all Jenkinsfiles.
     List<String> jenkinsfilePaths = findFiles(glob: '**/*/Jenkinsfile').collect { it.path }
 
@@ -25,4 +31,9 @@ List<String> provisionItems(String rootFolderPath, String repositoryURL) {
     )
 
     return jenkinsfilePaths
+ }
+
 }
+
+
+

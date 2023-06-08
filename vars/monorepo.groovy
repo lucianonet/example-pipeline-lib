@@ -1,5 +1,4 @@
-//import com.functions.provisionItems
-import com.functions.FfunctionUtils
+import com.functions.ProvisionItems
 
 /**
  * The step entry point.
@@ -11,11 +10,9 @@ def call() {
     println rootFolderPath
     println env.GIT_URL
 
-    FfunctionUtils fu = new FfunctionUtils()
-    
+    ProvisionItems pi = new ProvisionItems()
     println "Ajunge aici"
-    fu.helloWorld()
-    //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
+    List<String> jenkinsfilePaths = pi.provisionItems(rootFolderPath, env.GIT_URL)
     
     //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)

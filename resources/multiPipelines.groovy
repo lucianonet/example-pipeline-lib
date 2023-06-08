@@ -135,4 +135,4 @@ List<Path> jenkinsfilePaths = jenkinsfilePathsStr.collect { Paths.get(it) }
 Path rootFolder = Paths.get(rootFolderStr)
 
 generateFolders(jenkinsfilePaths, rootFolder)
-generateMultibranchPipelines(jenkinsfilePaths, rootFolder, repositoryURL)
+//generateMultibranchPipelines(jenkinsfilePaths, rootFolder, repositoryURL)
