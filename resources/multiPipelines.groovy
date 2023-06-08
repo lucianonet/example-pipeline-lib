@@ -25,7 +25,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
         String pipelineName = jenkinsfilePath.parent
 
         multibranchPipelineJob(rootFolder.resolve(pipelineName).toString()) {
-            displayName(repositoryName)
+            displayName(pipelineName)
             branchSources {
                 branchSource {
                     source {
