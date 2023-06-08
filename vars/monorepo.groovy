@@ -13,6 +13,7 @@ def call() {
 
     FfunctionUtils fu = new FfunctionUtils()
     
+    println "Ajunge aici"
     fu.helloWorld()
     //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
     
