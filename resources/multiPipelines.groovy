@@ -28,37 +28,40 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
             branchSources {
                 branchSource {
                     source {
-                        github {
+                        bitbucket {
                             // We must set a branch source ID.
-                            id('github')
+                            //id('bitbucket')
 
-                            // repoOwner, repository, repositoryUrl and configuredByUrl are all required
                             repoOwner(repositoryOwner)
                             repository(repositoryName)
-                            repositoryUrl(repositoryURL)
-                            configuredByUrl(false)
+                            serverUrl(repositoryURL)
 
                             // Make sure to properly set this.
-                            credentialsId('github-token')
+                            credentialsId('jenkins-bitbucket')
 
                             traits {
-                                // Depending on your preferences and root pipeline configuration, you can decide to
-                                // discover branches, pull requests, perhaps even tags.
-                                gitHubBranchDiscovery {
-                                    strategyId(EXCLUDE_PULL_REQUESTS_STRATEGY_ID)
-                                }
-                                gitHubPullRequestDiscovery {
-                                    strategyId(USE_CURRENT_SOURCE_STRATEGY_ID)
-                                }
-
-                                // By default, Jenkins notifies GitHub with a constant context, i.e. a string that
-                                // identifies the check. We want each individual build result to have its own context so
-                                // they do not conflict. Requires the github-scm-trait-notification-context-plugin to be
-                                // installed on the Jenkins instance.
-                                notificationContextTrait {
-                                    contextLabel("continuous-integration/jenkins/$pipelineName")
-                                    typeSuffix(false)
-                                }
+                                  webhookRegistrationTrait {
+		                    mode('ITEM')
+		                  }
+		    
+		                  submoduleOptionTrait {
+		                    extension {
+		                      disableSubmodules(false)
+		                      recursiveSubmodules(true)
+		                      trackingSubmodules(false)
+		                      reference(null)
+		                      timeout(null)
+		                      parentCredentials(true)
+		                    }
+		                  }
+		    
+		                  bitbucketBranchDiscovery {
+		                    strategyId(1)
+		                  }
+		                  
+		                  bitbucketPullRequestDiscovery {
+		                    strategyId(1)
+		                  }
                             }
                         }
                     }
@@ -68,13 +71,13 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                     buildStrategies {
                         skipInitialBuildOnFirstBranchIndexing()
                     }
-                    strategy {
-                        defaultBranchPropertyStrategy {
-                            props {
-                                noTriggerBranchProperty()
-                            }
-                        }
-                    }
+                    //strategy {
+                    //    defaultBranchPropertyStrategy {
+                    //        props {
+                    //            noTriggerBranchProperty()
+                    //        }
+                    //    }
+                    //}
                 }
             }
             factory {
@@ -86,7 +89,8 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                 discardOldItems {
                     // Keeping pipelines a few days for branches that do not exist anymore can be useful for
                     // troubleshooting purposes.
-                    daysToKeep(3)
+                    daysToKeep(-1)
+                    numToKeep(-1) 
                 }
             }
             triggers {
