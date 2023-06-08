@@ -1,4 +1,5 @@
 //import com.functions.ProvisionItems
+import org.jenkinsci.plugins.scriptsecurity.scripts.*
 
 /**
  * The step entry point.
@@ -11,7 +12,13 @@ def call() {
     println rootFolderPath
     println env.GIT_URL
     
-    List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
+    //List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
+
+    ScriptApproval sa = ScriptApproval.get();
+    //list pending approvals
+    for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
+        println "Pending Approved : " + pending.script
+    }
     
     jenkinsfilePaths.each { item ->
       println item
