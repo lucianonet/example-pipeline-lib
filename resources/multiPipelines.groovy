@@ -1,3 +1,7 @@
+
+import java.nio.file.Path
+import java.nio.file.Paths
+
 /**
  * Generate Multibranch Pipelines.
  * @param repositoryURL The Git repository URL.
