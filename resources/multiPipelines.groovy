@@ -35,7 +35,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
 
                             repoOwner(repositoryOwner)
                             repository('Setarea asta nu functioneaza')
-                            serverUrl(repositoryURL)
+                            serverUrl('https://bitbucket.org')
 
                             // Make sure to properly set this.
                             credentialsId('jenkins-bitbucket')
