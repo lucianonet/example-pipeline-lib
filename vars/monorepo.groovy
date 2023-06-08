@@ -13,6 +13,10 @@ def call() {
     
     List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
     
+    jenkinsfilePaths.each { item ->
+      println item
+    }    
+
     //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
    } 
