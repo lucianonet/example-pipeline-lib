@@ -30,6 +30,7 @@ def call() {
     ScriptApproval sa = ScriptApproval.get();
     //list pending approvals
     for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
+        println "Pending Script hash: " + pending.hash
         println "Pending Approved : " + pending.script
     }
  }
