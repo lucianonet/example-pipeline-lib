@@ -28,17 +28,17 @@ def call() {
     List<String> jenkinsfilePaths = findFiles(glob: '**/*/Jenkinsfile').collect { it.path }
 
     // Provision folder and Multibranch Pipelines.
-//    jobDsl(
-//            scriptText: libraryResource('multiPipelines.groovy'),
-//            additionalParameters: [
-//                    jenkinsfilePathsStr: jenkinsfilePaths,
-//                    rootFolderStr      : rootFolderPath,
-//                    repositoryURL      : env.GIT_URL
-//            ],
+    jobDsl(
+            scriptText: libraryResource('multiPipelines.groovy'),
+            additionalParameters: [
+                    jenkinsfilePathsStr: jenkinsfilePaths,
+                    rootFolderStr      : rootFolderPath,
+                    repositoryURL      : env.GIT_URL
+            ],
             // The following may be set to 'DELETE'. Note that branches will compete to delete and recreate items
             // unless you only provision items from the default branch.
-//            removedJobAction: 'IGNORE'
-//    )
+            removedJobAction: 'IGNORE'
+    )
 
     return jenkinsfilePaths
  }
