@@ -12,11 +12,7 @@ def call() {
     println rootFolderPath
     println env.GIT_URL
     
-    ScriptApproval sa = ScriptApproval.get();
-    //list pending approvals
-    for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
-        println "Pending Approved : " + pending.script
-    }
+    printPendingScripts()
     
     
     List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
@@ -28,7 +24,15 @@ def call() {
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
    } 
 }
-
+ 
+ @NonCPS
+ void printPendingScripts() {
+    ScriptApproval sa = ScriptApproval.get();
+    //list pending approvals
+    for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
+        println "Pending Approved : " + pending.script
+    }
+ }
 
  List<String> provisionItems(String rootFolderPath, String repositoryURL) {
     // Find all Jenkinsfiles.
