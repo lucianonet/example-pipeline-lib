@@ -33,7 +33,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                             //id('bitbucket')
 
                             repoOwner(repositoryOwner)
-                            repository(repositoryName)
+                            repository('pc-timesheet-api')
                             serverUrl(repositoryURL)
 
                             // Make sure to properly set this.
