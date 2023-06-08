@@ -108,6 +108,11 @@ String getBaselineRevision() {
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
         stages + [("Build $multibranchPipelinesToRun"): {
+            println "Root Folder: " + rootFolderPath
+            println "Multibranch pipepile to run: " + multibranchPipelinesToRun
+            println "UrlEncode: " + URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')
+
+            
             def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
