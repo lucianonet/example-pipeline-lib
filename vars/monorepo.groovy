@@ -106,8 +106,11 @@ String getBaselineRevision() {
  * @param multibranchPipelinesToRun The list of Multibranch Pipelines for which a Pipeline is run.
  */
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
+    
+    
+    
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
-        stages + [("Build $multibranchPipelinesToRun"): {
+        stages + [("Build $multibranchPipelineToRun"): {
             println "Root Folder: " + rootFolderPath
             println "Multibranch pipepile to run: " + multibranchPipelineToRun
             println "UrlEncode: " + URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')
