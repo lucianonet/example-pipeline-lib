@@ -23,6 +23,9 @@ def call() {
     }    
 
     List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
+    multibranchPipelinesToRun.each {item -> 
+      println item
+    }
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
    } 
 }
