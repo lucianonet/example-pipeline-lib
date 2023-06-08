@@ -26,7 +26,6 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
 
         multibranchPipelineJob(rootFolder.resolve(pipelineName).toString()) {
             branchSources {
-                displayName("testtttttingProject")
                 branchSource {
                     source {
                         bitbucket {
