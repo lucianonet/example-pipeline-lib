@@ -26,7 +26,7 @@ def call() {
     multibranchPipelinesToRun.each {item -> 
       println item
     }
-    //runPipelines(rootFolderPath, multibranchPipelinesToRun)
+    runPipelines(rootFolderPath, multibranchPipelinesToRun)
    } 
 }
  
