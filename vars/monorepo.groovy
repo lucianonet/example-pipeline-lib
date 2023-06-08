@@ -20,7 +20,7 @@ def call() {
       println item
     }    
 
-    //List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
+    List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
     //runPipelines(rootFolderPath, multibranchPipelinesToRun)
    } 
 }
@@ -54,3 +54,46 @@ def call() {
 
     return jenkinsfilePaths
  }
+
+
+List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
+    findRelevantMultibranchPipelines(getChangedDirectories(getBaselineRevision()), jenkinsfilePaths)
+}
+
+@NonCPS
+static List<String> findRelevantMultibranchPipelines(List<String> changedFilesPathStr, List<String> jenkinsfilePathsStr) {
+    List<Path> changedFilesPath = changedFilesPathStr.collect { Paths.get(it) }
+    List<Path> jenkinsfilePaths = jenkinsfilePathsStr.collect { Paths.get(it) }
+
+    changedFilesPath.inject([]) { pipelines, changedFilePath ->
+        def matchingJenkinsfile = jenkinsfilePaths
+                .find { jenkinsfilePath -> changedFilePath.startsWith(jenkinsfilePath.parent) }
+        matchingJenkinsfile != null ? pipelines + [matchingJenkinsfile.parent.toString()] : pipelines
+    }.unique()
+}
+
+List<String> getChangedDirectories(String baselineRevision) {
+    // Jenkins native interface to retrieve changes, i.e. `currentBuild.changeSets`, returns an empty list for newly
+    // created branches (see https://issues.jenkins.io/browse/JENKINS-14138), so let's use `git` instead.
+    sh(
+            label: 'List changed directories',
+            script: "git diff --name-only $baselineRevision | xargs -L1 dirname | uniq",
+            returnStdout: true,
+    ).split().toList()
+}
+
+
+String getBaselineRevision() {
+    // Depending on your seed pipeline configuration and preferences, you can set the baseline revision to a target
+    // branch, e.g. the repository's default branch or even `env.CHANGE_TARGET` if Jenkins is configured to discover
+    // pull requests.
+    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
+    // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
+    // previous build revision may not exist anymore.
+            .find { revision ->
+                revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
+            } ?: 'HEAD^'
+}
+
+
+
