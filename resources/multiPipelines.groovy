@@ -25,6 +25,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
         String pipelineName = jenkinsfilePath.parent
 
         multibranchPipelineJob(rootFolder.resolve(pipelineName).toString()) {
+            displayName(repositoryName)
             branchSources {
                 branchSource {
                     source {
@@ -33,7 +34,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                             //id('bitbucket')
 
                             repoOwner(repositoryOwner)
-                            repository(repositoryURL)
+                            repository('Setarea asta nu functioneaza')
                             serverUrl(repositoryURL)
 
                             // Make sure to properly set this.
