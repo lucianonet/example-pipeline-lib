@@ -128,12 +128,10 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
                 }
             }
 
-            def parameters = [:]
-
-            parameters['project'] = pipelineName
+            println "Multibranch pipepile to run: " + multibranchPipelineToRun
 
             // Trigger downstream builds.
-            build(job: pipelineName, parameters: parameters,   propagate: true, wait: true)
+            build(job: pipelineName, parameters: [string(name: 'project', value: multibranchPipelineToRun)],   propagate: true, wait: true)
         }]
     })
 }
