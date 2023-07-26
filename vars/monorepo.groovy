@@ -113,10 +113,11 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
         stages + [("Build $multibranchPipelineToRun"): {
             println "Root Folder: " + rootFolderPath
             println "Multibranch pipepile to run: " + multibranchPipelineToRun
-            println "UrlEncode: " + URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')
+           //env.CHANGE_BRANCH
+            println "UrlEncode: " + URLEncoder.encode(env.GIT_BRANCH, 'UTF-8')
 
             
-            def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
+            def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${URLEncoder.encode(env.GIT_BRANCH, 'UTF-8')}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
