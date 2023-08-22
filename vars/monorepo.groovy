@@ -94,7 +94,10 @@ String getBaselineRevision() {
     // pull requests.
     println "ENV.IS_PR:" + env.IS_PR
     if (env.IS_PR=='true') {
-        env.CHANGE_TARGET
+        def branchNamePath = "origin/" + env.CHANGE_TARGET
+        def revision = sh(script: "git rev-parse --quiet --verify $branchNamePath", returnStdout: true)
+        println "CHANGE_TARGET revision: " + revision
+        revision
     } else {
         [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
         // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
