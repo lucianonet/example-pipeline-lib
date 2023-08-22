@@ -97,7 +97,7 @@ String getBaselineRevision() {
     // previous build revision may not exist anymore.
             .find { revision ->
                 def exitCode = sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true)
-                println "Sh cmd exit code:" + exitCode
+                println "SH cmd exit code:" + exitCode
                 println "ENV.IS_PR:" + env.IS_PR
                 revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
             } ?: 'HEAD^'
