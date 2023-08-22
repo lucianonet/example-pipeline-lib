@@ -92,19 +92,21 @@ String getBaselineRevision() {
     // Depending on your seed pipeline configuration and preferences, you can set the baseline revision to a target
     // branch, e.g. the repository's default branch or even `env.CHANGE_TARGET` if Jenkins is configured to discover
     // pull requests.
-    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
-    // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
-    // previous build revision may not exist anymore.
-            .find { revision ->
-                println "ENV.IS_PR:" + env.IS_PR
-
-                if (revision != null) {
-                    def exitCode = sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true)
-                    println "SH cmd exit code:" + exitCode
-                }
-
-                revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
-            } ?: 'HEAD^'
+    println "ENV.IS_PR:" + env.IS_PR
+    if (env.IS_PR=='true') {
+        env.CHANGE_TARGET
+    } else {
+        [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
+        // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
+        // previous build revision may not exist anymore.
+                .find { revision ->
+                    if (revision != null) {
+                        def exitCode = sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true)
+                        println "SH cmd (git rev-parse --quiet --verify) exit code:" + exitCode
+                    }
+                    revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
+                } ?: 'HEAD^'
+    }
 }
 
 /**
