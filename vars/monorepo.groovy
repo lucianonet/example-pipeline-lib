@@ -82,11 +82,11 @@ List<String> getChangedDirectories(String baselineRevision) {
     // created branches (see https://issues.jenkins.io/browse/JENKINS-14138), so let's use `git` instead.
     sh(
             label: 'List changed directories',
-            script: '''
-                        for file in $(git diff --name-only ${baselineRevision}); do
-                            dirname "$file"
+            script: """
+                        for file in \$(git diff --name-only ${baselineRevision}); do
+                            dirname "\$file"
                         done | uniq
-                    ''',
+                    """,
             returnStdout: true,
     ).split().toList()
 }
